@@ -13,20 +13,20 @@ class DjangoData(object):
     """
     Object responsible for loading raw HTML data for Django Docs
     """
-    def __init__(self, html_page_name):
+    def __init__(self, page_name):
         """
         Initialize DjangoData object. Load data from HTML.
 
         """
         self.DJANGO_HTML = ""
-        self.load_data(html_page_name)
+        self.load_data(page_name)
 
-    def load_data(self, html_page_name):
+    def load_data(self, page_name):
         """
         Open the HTML file and load it into the object.
 
         """
-        with open('download/' + html_page_name, 'r') as data_file:
+        with open('download/' + page_name, 'r') as data_file:
             self.DJANGO_HTML = data_file.read()
 
     def get_raw_data(self):
@@ -93,6 +93,18 @@ class DjangoDataParser(object):
         """
         return section.find('p').text.replace('\n', ' ')
 
+    def parse_second_paragraph_from_data(self, section):
+        """
+        Get the second paragraph for display
+        Args:
+            section: A section of parsed HTML that represents a Element
+
+        Returns:
+            second paragraph in the HTML
+
+        """
+        return section.find('p').text.replace('\n', ' ')
+
     def parse_code_from_data(self, section):
         """
         Look for an example code block to output
@@ -107,7 +119,7 @@ class DjangoDataParser(object):
             return '<pre><code>{}</code></pre>'.format(code.text.replace('\n', '\\n'))
         return ''
 
-    def parse_for_data(self):
+    def parse_for_data(self, code_or_second_paragraph):
         """
         Main gateway into parsing the data. Will retrieve all necessary data elements.
         """
@@ -116,12 +128,19 @@ class DjangoDataParser(object):
         for section in (self.tag_sections):
             name, anchor = self.parse_name_and_anchor_from_data(section)
             first_paragraph = self.parse_first_paragraph_from_data(section)
-            code = self.parse_code_from_data(section)
+
+            if code_or_second_paragraph == "code":
+                code = self.parse_code_from_data(section)
+                second_paragraph = ''
+            elif code_or_second_paragraph == "paragraph":
+                second_paragraph = self.parse_second_paragraph_from_data(section)
+                code = ''
 
             data_elements = {
                 'name': name,
                 'anchor': anchor,
                 'first_paragraph': first_paragraph,
+                'second_paragraph': second_paragraph,
                 'code': code,
                 'url': self.url
             }
@@ -157,7 +176,8 @@ class DjangoDataOutput(object):
                     name = data_element.get('name')
                     code = data_element.get('code')
                     first_paragraph = '<p>' + data_element.get('first_paragraph') + '</p>'
-                    abstract = '{}{}{}'.format(first_paragraph, '', code)
+                    second_paragraph = '<p>' + data_element.get('second_paragraph') + '</p>'
+                    abstract = '{}{}{}'.format(first_paragraph + second_paragraph, '', code)
                     abstract = '<section class="prog__container">' + abstract + '</section>'
                     url = '{}{}'.format(data_element.get('url'), data_element.get('anchor'))
                     list_of_data = [
@@ -185,18 +205,27 @@ if __name__ == "__main__":
     else:
         DJANGO_DOC_URL = DJANGO_DOC_URL.format('1.10')
 
-    data = DjangoData('index.html')
 
-    section_names = ['s-built-in-tag-reference','s-built-in-filter-reference']
-    page_url = '{}{}'.format(DJANGO_DOC_URL,'/ref/templates/builtins/')
+    """
+    The Complete Page Structure to be scrapped
+        name: Downloaded file name
+        sections: Sections in page
+        code_or_second_paragraph: Whether to get code or second_paragraph
+    """
+    page_structure = [
+    {"Name":"builtins.html", "Sections":['s-built-in-tag-reference','s-built-in-filter-reference'],"code_or_second_paragraph":"code"},
+    ]
 
-    parser = []
+    for page in page_structure:
+        data = DjangoData(page["Name"])
 
-    for section_name in section_names:
-        parser.append(DjangoDataParser(data.get_raw_data(), section_name, page_url))
+        page_url = '{}{}'.format(DJANGO_DOC_URL,'/ref/templates/builtins/')
 
+        parser = []
+        for section_name in page["Sections"]:
+            parser.append(DjangoDataParser(data.get_raw_data(), section_name, page_url))
 
-    for parsed in parser:
-        parsed.parse_for_data()
-        output = DjangoDataOutput(parsed.get_data())
-        output.create_file()
+        for parsed in parser:
+            parsed.parse_for_data(page["code_or_second_paragraph"])
+            output = DjangoDataOutput(parsed.get_data())
+            output.create_file()

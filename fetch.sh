@@ -3,7 +3,7 @@
 mkdir -p download
 cd download
 rm -f *.html
-wget --quiet https://docs.djangoproject.com/en/1.10/ref/templates/builtins/ -O index.html
+wget --quiet https://docs.djangoproject.com/en/1.10/ref/templates/builtins/ -O builtins.html
 # https://docs.djangoproject.com/en/1.10/ref/settings/
 # https://docs.djangoproject.com/en/1.10/ref/utils/
 # https://docs.djangoproject.com/en/1.10/ref/validators/

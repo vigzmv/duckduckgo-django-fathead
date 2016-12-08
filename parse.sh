@@ -1,4 +1,4 @@
 #!/bin/bash
 
-rm output.txt
-python parse.py --django-version 1.10
+rm -f output.txt
+python3 parse.py --django-version 1.10
