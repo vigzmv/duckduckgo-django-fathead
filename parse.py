@@ -151,7 +151,7 @@ class DjangoDataOutput(object):
         Iterate through the data and create the needed output.txt file.
 
         """
-        with open('output.txt', 'w+') as output_file:
+        with open('output.txt', 'a+') as output_file:
             for data_element in self.data:
                 if data_element.get('name'):
                     name = data_element.get('name')
@@ -189,10 +189,14 @@ if __name__ == "__main__":
 
     section_names = ['s-built-in-tag-reference','s-built-in-filter-reference']
     page_url = '{}{}'.format(DJANGO_DOC_URL,'/ref/templates/builtins/')
+
+    parser = []
+
     for section_name in section_names:
-        parser = DjangoDataParser(data.get_raw_data(), section_name, page_url)
+        parser.append(DjangoDataParser(data.get_raw_data(), section_name, page_url))
 
-    parser.parse_for_data()
 
-    output = DjangoDataOutput(parser.get_data())
-    output.create_file()
+    for parsed in parser:
+        parsed.parse_for_data()
+        output = DjangoDataOutput(parsed.get_data())
+        output.create_file()
