@@ -81,7 +81,7 @@ class DjangoDataParser(object):
 
         return name, anchor
 
-    def parse_first_paragraph_from_data(self, section):
+    def parse_first_paragraph_from_data(self, section, pstyle):
         """
         Get the first paragraph for display
         Args:
@@ -91,12 +91,23 @@ class DjangoDataParser(object):
             First paragraph in the HTML
 
         """
-        try:
-            return section.find('p').text.replace('\n', ' ')
-        except:
-            return ''
 
-    def parse_second_paragraph_from_data(self, section):
+        if pstyle == "p":
+            try:
+                return section.find('p').text.replace('\n', ' ')
+            except:
+                return ''
+
+        elif pstyle == "dt":
+            try:
+                dtname = section.find('dt').text.replace('\n', ' ')
+                if "source" in dtname:
+                    dtname = dtname[:-9]
+                return dtname
+            except:
+                return ''
+
+    def parse_second_paragraph_from_data(self, section, pstyle):
         """
         Get the second paragraph for display
         Args:
@@ -107,12 +118,21 @@ class DjangoDataParser(object):
 
         """
 
-        try:
-            para = section.find_all('p')[1]
-            para = para.text.partition(".")
-            return ''.join(para[:2]).replace('\n',' ')
-        except:
-            return ''
+        if pstyle == "p":
+            try:
+                para = section.find_all('p')[1]
+                para = para.text.partition(". ")
+                return ''.join(para[:2]).replace('\n',' ')
+            except:
+                return ''
+
+        elif pstyle == "dt":
+            para = section.find_all('p')[0]
+            if para:
+                para = para.text.partition(". ")
+                return ''.join(para[:2]).replace('\n',' ')
+            else:
+                return ''
 
     def parse_code_from_data(self, section):
         """
@@ -128,7 +148,7 @@ class DjangoDataParser(object):
             return '<pre><code>{}</code></pre>'.format(code.text.replace('\n', '\\n'))
         return ''
 
-    def parse_for_data(self, code_or_second_para, hstyle):
+    def parse_for_data(self, code_or_second_para, hstyle, pstyle):
         """
         Main gateway into parsing the data. Will retrieve all necessary data elements.
         """
@@ -136,13 +156,13 @@ class DjangoDataParser(object):
 
         for section in (self.tag_sections):
             name, anchor = self.parse_name_and_anchor_from_data(section, hstyle)
-            first_paragraph = self.parse_first_paragraph_from_data(section)
+            first_paragraph = self.parse_first_paragraph_from_data(section, pstyle)
 
             if code_or_second_para == "code":
                 code = self.parse_code_from_data(section)
                 second_paragraph = ''
             elif code_or_second_para == "para":
-                second_paragraph = self.parse_second_paragraph_from_data(section)
+                second_paragraph = self.parse_second_paragraph_from_data(section, pstyle)
                 code = ''
 
             data_elements = {
@@ -245,6 +265,24 @@ if __name__ == "__main__":
     # {"Name":'urls.html', "Sections":['module-django.conf.urls'],
     # "Url":'/ref/urls/', "code_or_second_para":"para", "hstyle":"h2"}
 
+    # {"Name":'database-functions.html', "Sections":['module-django.db.models.functions'],
+    # "Url":'/ref/models/database-functions/', "code_or_second_para":"para", "hstyle":"h2"},
+
+    # {"Name":'fields.html', "Sections":['module-django.db.models.fields'],
+    # "Url":'/ref/models/fields/', "code_or_second_para":"para", "hstyle":"h3"},
+
+    # {"Name":'api.html', "Sections":['module-django.forms'],
+    # "Url":'/ref/forms/api/', "code_or_second_para":"para", "hstyle":"dt"}
+
+    # {"Name":'form_fields.html', "Sections":['module-django.forms.fields'],
+    # "Url":'/ref/forms/fields/', "code_or_second_para":"para", "hstyle":"h3"}
+
+    # {"Name":'widgets.html', "Sections":['built-in-widgets'],
+    # "Url":'/ref/forms/widgets/', "code_or_second_para":"para", "hstyle":"h4"}
+
+    {"Name":'migration-operations.html', "Sections":['schema-operations','special-operations'],
+    "Url":'/ref/migration-operations/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"dt"}
+
     ]
 
     for page in page_structure:
@@ -257,6 +295,6 @@ if __name__ == "__main__":
             parser.append(DjangoDataParser(data.get_raw_data(), section_name, page_url))
 
             for parsed in parser:
-                parsed.parse_for_data(page["code_or_second_para"], page["hstyle"])
+                parsed.parse_for_data(page["code_or_second_para"], page["hstyle"], page["pstyle"])
                 output = DjangoDataOutput(parsed.get_data())
                 output.create_file()
