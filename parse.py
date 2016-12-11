@@ -104,9 +104,12 @@ class DjangoDataParser(object):
 
         """
 
-        para = section.find_all('p')[1]
-        para = para.partition(".")[0] + para.partition(".")[1]
-        return para.replace('\n', ' ')
+        try:
+            para = section.find_all('p')[1]
+            para = para.text.partition(".")
+            return ''.join(para[:2]).replace('\n',' ')
+        except:
+            return ''
 
     def parse_code_from_data(self, section):
         """
@@ -216,14 +219,18 @@ if __name__ == "__main__":
         code_or_second_para: Whether to get code or second_paragraph
     """
     page_structure = [
-    {"Name":"builtins.html", "Sections":['built-in-tag-reference','built-in-filter-reference'],"code_or_second_para":"code"},
-    {"Name":"settings.html", "Sections":['core-settings','auth'],"code_or_second_para":"para"},
+    {"Name":'builtins.html', "Sections":['built-in-tag-reference','built-in-filter-reference'],
+    "Url":'/ref/templates/builtins/',"code_or_second_para":"code"},
+
+    {"Name":'settings.html', "Sections":['core-settings','auth','messages','sessions','sites','static-files'],
+    "Url":'/ref/settings/',"code_or_second_para":"para"},
+
     ]
 
     for page in page_structure:
         data = DjangoData(page["Name"])
 
-        page_url = '{}{}'.format(DJANGO_DOC_URL,'/ref/templates/builtins/')
+        page_url = '{}{}'.format(DJANGO_DOC_URL,page["Url"])
 
         parser = []
         for section_name in page["Sections"]:
