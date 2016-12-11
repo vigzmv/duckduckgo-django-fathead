@@ -103,7 +103,10 @@ class DjangoDataParser(object):
                 dtname = section.find('dt').text.replace('\n', ' ')
                 if "source" in dtname:
                     dtname = dtname[:-9]
+                elif "¶" in dtname:
+                    dtname = dtname[:-1]
                 return dtname
+
             except:
                 return ''
 
@@ -280,9 +283,17 @@ if __name__ == "__main__":
     # {"Name":'widgets.html', "Sections":['built-in-widgets'],
     # "Url":'/ref/forms/widgets/', "code_or_second_para":"para", "hstyle":"h4"}
 
-    {"Name":'migration-operations.html', "Sections":['schema-operations','special-operations'],
-    "Url":'/ref/migration-operations/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"dt"}
+    # {"Name":'migration-operations.html', "Sections":['schema-operations','special-operations'],
+    # "Url":'/ref/migration-operations/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"dt"}
 
+    # {"Name":'contrib.html', "Sections":['contrib-packages'],
+    # "Url":'/ref/contrib/', "code_or_second_para":"para", "hstyle":"h2", "pstyle":"p"}
+
+    # {"Name":'django-admin.html', "Sections":['available-commands'],
+    # "Url":'/ref/django-admin/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"dt"},
+
+    {"Name":'django-admin.html', "Sections":['commands-provided-by-applications'],
+    "Url":'/ref/django-admin/', "code_or_second_para":"para", "hstyle":"h4", "pstyle":"dt"},
     ]
 
     for page in page_structure:

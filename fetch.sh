@@ -15,6 +15,6 @@ rm -f *.html
 # wget --quiet https://docs.djangoproject.com/en/1.10/ref/forms/api/ -O api.html
 # wget --quiet https://docs.djangoproject.com/en/1.10/ref/forms/fields/ -O form_fields.html
 # wget --quiet https://docs.djangoproject.com/en/1.10/ref/forms/widgets/ -O widgets.html
-wget --quiet https://docs.djangoproject.com/en/1.10/ref/migration-operations/ -O migration-operations.html
-wget --quiet https://docs.djangoproject.com/en/1.10/ref/contrib/ -O contrib.html
-# wget --quiet https://docs.djangoproject.com/en/1.10/ref/django-admin/
+# wget --quiet https://docs.djangoproject.com/en/1.10/ref/migration-operations/ -O migration-operations.html
+# wget --quiet https://docs.djangoproject.com/en/1.10/ref/contrib/ -O contrib.html
+# wget --quiet https://docs.djangoproject.com/en/1.10/ref/django-admin/ -O django-admin.html
