@@ -103,7 +103,10 @@ class DjangoDataParser(object):
             second paragraph in the HTML
 
         """
-        return section.find('p').text.replace('\n', ' ')
+
+        para = section.find_all('p')[1]
+        para = para.partition(".")[0] + para.partition(".")[1]
+        return para.replace('\n', ' ')
 
     def parse_code_from_data(self, section):
         """
@@ -119,7 +122,7 @@ class DjangoDataParser(object):
             return '<pre><code>{}</code></pre>'.format(code.text.replace('\n', '\\n'))
         return ''
 
-    def parse_for_data(self, code_or_second_paragraph):
+    def parse_for_data(self, code_or_second_para):
         """
         Main gateway into parsing the data. Will retrieve all necessary data elements.
         """
@@ -129,10 +132,10 @@ class DjangoDataParser(object):
             name, anchor = self.parse_name_and_anchor_from_data(section)
             first_paragraph = self.parse_first_paragraph_from_data(section)
 
-            if code_or_second_paragraph == "code":
+            if code_or_second_para == "code":
                 code = self.parse_code_from_data(section)
                 second_paragraph = ''
-            elif code_or_second_paragraph == "paragraph":
+            elif code_or_second_para == "para":
                 second_paragraph = self.parse_second_paragraph_from_data(section)
                 code = ''
 
@@ -210,10 +213,11 @@ if __name__ == "__main__":
     The Complete Page Structure to be scrapped
         name: Downloaded file name
         sections: Sections in page
-        code_or_second_paragraph: Whether to get code or second_paragraph
+        code_or_second_para: Whether to get code or second_paragraph
     """
     page_structure = [
-    {"Name":"builtins.html", "Sections":['s-built-in-tag-reference','s-built-in-filter-reference'],"code_or_second_paragraph":"code"},
+    {"Name":"builtins.html", "Sections":['built-in-tag-reference','built-in-filter-reference'],"code_or_second_para":"code"},
+    {"Name":"settings.html", "Sections":['core-settings','auth'],"code_or_second_para":"para"},
     ]
 
     for page in page_structure:
@@ -225,7 +229,7 @@ if __name__ == "__main__":
         for section_name in page["Sections"]:
             parser.append(DjangoDataParser(data.get_raw_data(), section_name, page_url))
 
-        for parsed in parser:
-            parsed.parse_for_data(page["code_or_second_paragraph"])
-            output = DjangoDataOutput(parsed.get_data())
-            output.create_file()
+            for parsed in parser:
+                parsed.parse_for_data(page["code_or_second_para"])
+                output = DjangoDataOutput(parsed.get_data())
+                output.create_file()
