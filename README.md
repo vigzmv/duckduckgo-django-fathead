@@ -2,13 +2,18 @@ A Django Duckduckgo Fathead (key-value Instant Answers backed by a database) cre
 
 Dependencies:
 - Python 3.4.3
-- pip install beautifulsoup4==4.4.1
+- beautifulsoup4==4.4.1
 
+```sh
+$ pip install beautifulsoup4==4.4.1
+```
 Run  
 ```sh
  $ sh fetch.sh  
  $ sh parse.sh
 ```
 
-Output  
+Output File  
+```
  output.txt
+```

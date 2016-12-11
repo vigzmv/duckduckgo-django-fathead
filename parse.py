@@ -57,7 +57,7 @@ class DjangoDataParser(object):
         self.tag_sections = tags.find_all('div', {'class': 'section'})
 
 
-    def parse_name_and_anchor_from_data(self, section):
+    def parse_name_and_anchor_from_data(self, section, heading_style):
         """
         Find the name and anchor for a given section
         Args:
@@ -70,12 +70,12 @@ class DjangoDataParser(object):
         """
         name = ''
         anchor = ''
-        h3 = section.find('h3')
-        if h3:
-            code = h3.find('code', {'class': 'docutils'})
+        h = section.find(heading_style)
+        if h:
+            code = h.find('code', {'class': 'docutils'})
             if code:
                 name = code.find('span', {'class': 'pre'}).string
-            a_tag = h3.find('a', {'class': 'headerlink'})
+            a_tag = h.find('a', {'class': 'headerlink'})
             if a_tag:
                 anchor = a_tag['href']
 
@@ -91,7 +91,10 @@ class DjangoDataParser(object):
             First paragraph in the HTML
 
         """
-        return section.find('p').text.replace('\n', ' ')
+        try:
+            return section.find('p').text.replace('\n', ' ')
+        except:
+            return ''
 
     def parse_second_paragraph_from_data(self, section):
         """
@@ -125,14 +128,14 @@ class DjangoDataParser(object):
             return '<pre><code>{}</code></pre>'.format(code.text.replace('\n', '\\n'))
         return ''
 
-    def parse_for_data(self, code_or_second_para):
+    def parse_for_data(self, code_or_second_para, hstyle):
         """
         Main gateway into parsing the data. Will retrieve all necessary data elements.
         """
         data = []
 
         for section in (self.tag_sections):
-            name, anchor = self.parse_name_and_anchor_from_data(section)
+            name, anchor = self.parse_name_and_anchor_from_data(section, hstyle)
             first_paragraph = self.parse_first_paragraph_from_data(section)
 
             if code_or_second_para == "code":
@@ -180,6 +183,8 @@ class DjangoDataOutput(object):
             for data_element in self.data:
                 if data_element.get('name'):
                     name = data_element.get('name')
+                    if "()" in name:
+                        name = name[:-2]
                     code = data_element.get('code')
                     first_paragraph = '<p>' + data_element.get('first_paragraph') + '</p>'
                     second_paragraph = '<p>' + data_element.get('second_paragraph') + '</p>'
@@ -219,11 +224,26 @@ if __name__ == "__main__":
         code_or_second_para: Whether to get code or second_paragraph
     """
     page_structure = [
-    {"Name":'builtins.html', "Sections":['built-in-tag-reference','built-in-filter-reference'],
-    "Url":'/ref/templates/builtins/',"code_or_second_para":"code"},
+    # {"Name":'builtins.html', "Sections":['built-in-tag-reference','built-in-filter-reference'],
+    # "Url":'/ref/templates/builtins/',"code_or_second_para":"code"},
+    #
+    # {"Name":'settings.html', "Sections":['core-settings','auth','messages','sessions','sites','static-files'],
+    # "Url":'/ref/settings/',"code_or_second_para":"para"},
 
-    {"Name":'settings.html', "Sections":['core-settings','auth','messages','sessions','sites','static-files'],
-    "Url":'/ref/settings/',"code_or_second_para":"para"},
+    # {"Name":'utils.html', "Sections":['module-django.utils.cache','module-django.utils.dateparse','module-django.utils.decorators',
+    # 'module-django.utils.encoding','module-django.utils.feedgenerator','module-django.utils.functional','module-django.utils.html',
+    # 'module-django.utils.http','module-django.utils.module_loading','module-django.utils.safestring','module-django.utils.text',
+    # 'module-django.utils.timezone','module-django.utils.translation'],
+    # "Url":'/ref/utils/',"code_or_second_para":"para"},
+
+    # {"Name":'validators.html', "Sections":['built-in-validators'],
+    # "Url":'/ref/validators/',"code_or_second_para":"para"},
+
+    # {"Name":'urlresolvers.html', "Sections":['module-django.urls'],
+    # "Url":'/ref/urlresolvers/', "code_or_second_para":"para", "hstyle":"h2"},
+
+    # {"Name":'urls.html', "Sections":['module-django.conf.urls'],
+    # "Url":'/ref/urls/', "code_or_second_para":"para", "hstyle":"h2"}
 
     ]
 
@@ -237,6 +257,6 @@ if __name__ == "__main__":
             parser.append(DjangoDataParser(data.get_raw_data(), section_name, page_url))
 
             for parsed in parser:
-                parsed.parse_for_data(page["code_or_second_para"])
+                parsed.parse_for_data(page["code_or_second_para"], page["hstyle"])
                 output = DjangoDataOutput(parsed.get_data())
                 output.create_file()
