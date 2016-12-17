@@ -247,52 +247,52 @@ if __name__ == "__main__":
         code_or_second_para: Whether to get code or second_paragraph
     """
     page_structure = [
-    # {"Name":'builtins.html', "Sections":['built-in-tag-reference','built-in-filter-reference'],
-    # "Url":'/ref/templates/builtins/',"code_or_second_para":"code"},
-    #
-    # {"Name":'settings.html', "Sections":['core-settings','auth','messages','sessions','sites','static-files'],
-    # "Url":'/ref/settings/',"code_or_second_para":"para"},
+    {"Name":'builtins.html', "Sections":['s-built-in-tag-reference','s-built-in-filter-reference'],
+    "Url":'/ref/templates/builtins/',"code_or_second_para":"code", "hstyle":"h3", "pstyle":"p"},
 
-    # {"Name":'utils.html', "Sections":['module-django.utils.cache','module-django.utils.dateparse','module-django.utils.decorators',
-    # 'module-django.utils.encoding','module-django.utils.feedgenerator','module-django.utils.functional','module-django.utils.html',
-    # 'module-django.utils.http','module-django.utils.module_loading','module-django.utils.safestring','module-django.utils.text',
-    # 'module-django.utils.timezone','module-django.utils.translation'],
-    # "Url":'/ref/utils/',"code_or_second_para":"para"},
+    {"Name":'settings.html', "Sections":['s-core-settings','s-auth','s-messages','s-sessions','s-sites','s-static-files'],
+    "Url":'/ref/settings/',"code_or_second_para":"para","hstyle":"h3", "pstyle":"p"},
 
-    # {"Name":'validators.html', "Sections":['built-in-validators'],
-    # "Url":'/ref/validators/',"code_or_second_para":"para"},
+    {"Name":'utils.html', "Sections":['s-module-django.utils.cache','s-module-django.utils.dateparse','s-module-django.utils.decorators',
+    's-module-django.utils.encoding','s-module-django.utils.feedgenerator','s-module-django.utils.functional','s-module-django.utils.html',
+    's-module-django.utils.http','s-module-django.utils.module_loading','s-module-django.utils.safestring','s-module-django.utils.text',
+    's-module-django.utils.timezone','s-module-django.utils.translation'],
+    "Url":'/ref/utils/',"code_or_second_para":"para","hstyle":"h3", "pstyle":"p"},
 
-    # {"Name":'urlresolvers.html', "Sections":['module-django.urls'],
-    # "Url":'/ref/urlresolvers/', "code_or_second_para":"para", "hstyle":"h2"},
+    {"Name":'validators.html', "Sections":['s-built-in-validators'],
+    "Url":'/ref/validators/',"code_or_second_para":"para", "hstyle":"h3", "pstyle":"p"},
 
-    # {"Name":'urls.html', "Sections":['module-django.conf.urls'],
-    # "Url":'/ref/urls/', "code_or_second_para":"para", "hstyle":"h2"}
+    {"Name":'urlresolvers.html', "Sections":['s-module-django.urls'],
+    "Url":'/ref/urlresolvers/', "code_or_second_para":"para", "hstyle":"h2", "pstyle":"p"},
 
-    # {"Name":'database-functions.html', "Sections":['module-django.db.models.functions'],
-    # "Url":'/ref/models/database-functions/', "code_or_second_para":"para", "hstyle":"h2"},
+    {"Name":'urls.html', "Sections":['s-module-django.conf.urls'],
+    "Url":'/ref/urls/', "code_or_second_para":"para", "hstyle":"h2", "pstyle":"p"},
 
-    # {"Name":'fields.html', "Sections":['module-django.db.models.fields'],
-    # "Url":'/ref/models/fields/', "code_or_second_para":"para", "hstyle":"h3"},
+    {"Name":'database-functions.html', "Sections":['s-module-django.db.models.functions'],
+    "Url":'/ref/models/database-functions/', "code_or_second_para":"para", "hstyle":"h2", "pstyle":"p"},
 
-    # {"Name":'api.html', "Sections":['module-django.forms'],
-    # "Url":'/ref/forms/api/', "code_or_second_para":"para", "hstyle":"dt"}
+    {"Name":'fields.html', "Sections":['s-module-django.db.models.fields'],
+    "Url":'/ref/models/fields/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"p"},
 
-    # {"Name":'form_fields.html', "Sections":['module-django.forms.fields'],
-    # "Url":'/ref/forms/fields/', "code_or_second_para":"para", "hstyle":"h3"}
+    {"Name":'api.html', "Sections":['s-module-django.forms'],
+    "Url":'/ref/forms/api/', "code_or_second_para":"para", "hstyle":"dt", "pstyle":"p"},
 
-    # {"Name":'widgets.html', "Sections":['built-in-widgets'],
-    # "Url":'/ref/forms/widgets/', "code_or_second_para":"para", "hstyle":"h4"}
+    {"Name":'form_fields.html', "Sections":['s-module-django.forms.fields'],
+    "Url":'/ref/forms/fields/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"p"},
 
-    # {"Name":'migration-operations.html', "Sections":['schema-operations','special-operations'],
-    # "Url":'/ref/migration-operations/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"dt"}
+    {"Name":'widgets.html', "Sections":['s-built-in-widgets'],
+    "Url":'/ref/forms/widgets/', "code_or_second_para":"para", "hstyle":"h4", "pstyle":"p"},
 
-    # {"Name":'contrib.html', "Sections":['contrib-packages'],
-    # "Url":'/ref/contrib/', "code_or_second_para":"para", "hstyle":"h2", "pstyle":"p"}
+    {"Name":'migration-operations.html', "Sections":['s-schema-operations','s-special-operations'],
+    "Url":'/ref/migration-operations/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"dt"},
 
-    # {"Name":'django-admin.html', "Sections":['available-commands'],
-    # "Url":'/ref/django-admin/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"dt"},
+    {"Name":'contrib.html', "Sections":['s-contrib-packages'],
+    "Url":'/ref/contrib/', "code_or_second_para":"para", "hstyle":"h2", "pstyle":"p"},
 
-    {"Name":'django-admin.html', "Sections":['commands-provided-by-applications'],
+    {"Name":'django-admin.html', "Sections":['s-available-commands'],
+    "Url":'/ref/django-admin/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"dt"},
+
+    {"Name":'django-admin.html', "Sections":['s-commands-provided-by-applications'],
     "Url":'/ref/django-admin/', "code_or_second_para":"para", "hstyle":"h4", "pstyle":"dt"},
     ]
 
