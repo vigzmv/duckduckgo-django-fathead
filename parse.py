@@ -13,6 +13,7 @@ class DjangoData(object):
     """
     Object responsible for loading raw HTML data for Django Docs
     """
+
     def __init__(self, page_name):
         """
         Initialize DjangoData object. Load data from HTML.
@@ -41,6 +42,7 @@ class DjangoDataParser(object):
     """
     Object responsible for parsing the raw HTML that contains Django Docs data
     """
+
     def __init__(self, raw_data, section_name, page_url):
         """
         Given raw data, get the relevant sections
@@ -53,9 +55,9 @@ class DjangoDataParser(object):
         soup_data = BeautifulSoup(raw_data, 'html.parser')
         doc_content = soup_data.find('div', {'id': 'docs-content'})
 
-        tags = doc_content.find('div', {'class': 'section', 'id': section_name})
+        tags = doc_content.find(
+            'div', {'class': 'section', 'id': section_name})
         self.tag_sections = tags.find_all('div', {'class': 'section'})
-
 
     def parse_name_and_anchor_from_data(self, section, heading_style):
         """
@@ -70,12 +72,12 @@ class DjangoDataParser(object):
         """
         name = ''
         anchor = ''
-        h = section.find(heading_style)
-        if h:
-            code = h.find('code', {'class': 'docutils'})
+        heading = section.find(heading_style)
+        if heading:
+            code = heading.find('code', {'class': 'docutils'})
             if code:
                 name = code.find('span', {'class': 'pre'}).string
-            a_tag = h.find('a', {'class': 'headerlink'})
+            a_tag = heading.find('a', {'class': 'headerlink'})
             if a_tag:
                 anchor = a_tag['href']
 
@@ -125,7 +127,7 @@ class DjangoDataParser(object):
             try:
                 para = section.find_all('p')[1]
                 para = para.text.partition(". ")
-                return ''.join(para[:2]).replace('\n',' ')
+                return ''.join(para[:2]).replace('\n', ' ')
             except:
                 return ''
 
@@ -133,7 +135,7 @@ class DjangoDataParser(object):
             para = section.find_all('p')[0]
             if para:
                 para = para.text.partition(". ")
-                return ''.join(para[:2]).replace('\n',' ')
+                return ''.join(para[:2]).replace('\n', ' ')
             else:
                 return ''
 
@@ -148,24 +150,28 @@ class DjangoDataParser(object):
         """
         code = section.find('div', {'class': 'highlight'})
         if code:
-            return '<pre><code>{}</code></pre>'.format(code.text.replace('\n', '\\n'))
+            return '<pre><code>{}</code></pre>'.format(
+                code.text.replace('\n', '\\n'))
         return ''
 
     def parse_for_data(self, code_or_second_para, hstyle, pstyle):
         """
         Main gateway into parsing the data. Will retrieve all necessary data elements.
         """
-        data = []
+        parsing_data = []
 
         for section in (self.tag_sections):
-            name, anchor = self.parse_name_and_anchor_from_data(section, hstyle)
-            first_paragraph = self.parse_first_paragraph_from_data(section, pstyle)
+            name, anchor = self.parse_name_and_anchor_from_data(
+                section, hstyle)
+            first_paragraph = self.parse_first_paragraph_from_data(
+                section, pstyle)
 
             if code_or_second_para == "code":
                 code = self.parse_code_from_data(section)
                 second_paragraph = ''
             elif code_or_second_para == "para":
-                second_paragraph = self.parse_second_paragraph_from_data(section, pstyle)
+                second_paragraph = self.parse_second_paragraph_from_data(
+                    section, pstyle)
                 code = ''
 
             data_elements = {
@@ -177,9 +183,9 @@ class DjangoDataParser(object):
                 'url': self.url
             }
 
-            data.append(data_elements)
+            parsing_data.append(data_elements)
 
-        self.parsed_data = data
+        self.parsed_data = parsing_data
 
     def get_data(self):
         """
@@ -194,6 +200,7 @@ class DjangoDataOutput(object):
     """
     Object responsible for outputting data into the output.txt file
     """
+
     def __init__(self, data):
         self.data = data
 
@@ -209,11 +216,15 @@ class DjangoDataOutput(object):
                     if "()" in name:
                         name = name[:-2]
                     code = data_element.get('code')
-                    first_paragraph = '<p>' + data_element.get('first_paragraph') + '</p>'
-                    second_paragraph = '<p>' + data_element.get('second_paragraph') + '</p>'
-                    abstract = '{}{}{}'.format(first_paragraph + second_paragraph, '', code)
+                    first_paragraph = '<p>' + \
+                        data_element.get('first_paragraph') + '</p>'
+                    second_paragraph = '<p>' + \
+                        data_element.get('second_paragraph') + '</p>'
+                    abstract = '{}{}{}'.format(
+                        first_paragraph + second_paragraph, '', code)
                     abstract = '<section class="prog__container">' + abstract + '</section>'
-                    url = '{}{}'.format(data_element.get('url'), data_element.get('anchor'))
+                    url = '{}{}'.format(data_element.get(
+                        'url'), data_element.get('anchor'))
                     list_of_data = [
                         name,       # unique name will be the name of the element
                         'A',        # type is article
@@ -223,7 +234,7 @@ class DjangoDataOutput(object):
                         '',         # ignore
                         '',         # no related topics
                         '',         # ignore
-                        DJANGO_HOME,# add an external link back to Django home
+                        DJANGO_HOME,  # add an external link back to Django home
                         '',         # no disambiguation
                         '',         # images
                         abstract,   # abstract
@@ -239,7 +250,6 @@ if __name__ == "__main__":
     else:
         DJANGO_DOC_URL = DJANGO_DOC_URL.format('1.10')
 
-
     """
     The Complete Page Structure to be scrapped
         name: Downloaded file name
@@ -247,65 +257,67 @@ if __name__ == "__main__":
         code_or_second_para: Whether to get code or second_paragraph
     """
     page_structure = [
-    {"Name":'builtins.html', "Sections":['s-built-in-tag-reference','s-built-in-filter-reference'],
-    "Url":'/ref/templates/builtins/',"code_or_second_para":"code", "hstyle":"h3", "pstyle":"p"},
+        {"Name": 'builtins.html', "Sections": ['s-built-in-tag-reference', 's-built-in-filter-reference'],
+         "Url":'/ref/templates/builtins/', "code_or_second_para":"code", "hstyle":"h3", "pstyle":"p"},
 
-    {"Name":'settings.html', "Sections":['s-core-settings','s-auth','s-messages','s-sessions','s-sites','s-static-files'],
-    "Url":'/ref/settings/',"code_or_second_para":"para","hstyle":"h3", "pstyle":"p"},
+        {"Name": 'settings.html', "Sections": ['s-core-settings', 's-auth', 's-messages', 's-sessions', 's-sites', 's-static-files'],
+            "Url":'/ref/settings/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"p"},
 
-    {"Name":'utils.html', "Sections":['s-module-django.utils.cache','s-module-django.utils.dateparse','s-module-django.utils.decorators',
-    's-module-django.utils.encoding','s-module-django.utils.feedgenerator','s-module-django.utils.functional','s-module-django.utils.html',
-    's-module-django.utils.http','s-module-django.utils.module_loading','s-module-django.utils.safestring','s-module-django.utils.text',
-    's-module-django.utils.timezone','s-module-django.utils.translation'],
-    "Url":'/ref/utils/',"code_or_second_para":"para","hstyle":"h3", "pstyle":"p"},
+        {"Name": 'utils.html', "Sections": ['s-module-django.utils.cache', 's-module-django.utils.dateparse', 's-module-django.utils.decorators',
+                                            's-module-django.utils.encoding', 's-module-django.utils.feedgenerator', 's-module-django.utils.functional', 's-module-django.utils.html',
+                                            's-module-django.utils.http', 's-module-django.utils.module_loading', 's-module-django.utils.safestring', 's-module-django.utils.text',
+                                            's-module-django.utils.timezone', 's-module-django.utils.translation'],
+            "Url":'/ref/utils/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"p"},
 
-    {"Name":'validators.html', "Sections":['s-built-in-validators'],
-    "Url":'/ref/validators/',"code_or_second_para":"para", "hstyle":"h3", "pstyle":"p"},
+        {"Name": 'validators.html', "Sections": ['s-built-in-validators'],
+         "Url":'/ref/validators/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"p"},
 
-    {"Name":'urlresolvers.html', "Sections":['s-module-django.urls'],
-    "Url":'/ref/urlresolvers/', "code_or_second_para":"para", "hstyle":"h2", "pstyle":"p"},
+        {"Name": 'urlresolvers.html', "Sections": ['s-module-django.urls'],
+         "Url":'/ref/urlresolvers/', "code_or_second_para":"para", "hstyle":"h2", "pstyle":"p"},
 
-    {"Name":'urls.html', "Sections":['s-module-django.conf.urls'],
-    "Url":'/ref/urls/', "code_or_second_para":"para", "hstyle":"h2", "pstyle":"p"},
+        {"Name": 'urls.html', "Sections": ['s-module-django.conf.urls'],
+         "Url":'/ref/urls/', "code_or_second_para":"para", "hstyle":"h2", "pstyle":"p"},
 
-    {"Name":'database-functions.html', "Sections":['s-module-django.db.models.functions'],
-    "Url":'/ref/models/database-functions/', "code_or_second_para":"para", "hstyle":"h2", "pstyle":"p"},
+        {"Name": 'database-functions.html', "Sections": ['s-module-django.db.models.functions'],
+         "Url":'/ref/models/database-functions/', "code_or_second_para":"para", "hstyle":"h2", "pstyle":"p"},
 
-    {"Name":'fields.html', "Sections":['s-module-django.db.models.fields'],
-    "Url":'/ref/models/fields/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"p"},
+        {"Name": 'fields.html', "Sections": ['s-module-django.db.models.fields'],
+         "Url":'/ref/models/fields/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"p"},
 
-    {"Name":'api.html', "Sections":['s-module-django.forms'],
-    "Url":'/ref/forms/api/', "code_or_second_para":"para", "hstyle":"dt", "pstyle":"p"},
+        {"Name": 'api.html', "Sections": ['s-module-django.forms'],
+         "Url":'/ref/forms/api/', "code_or_second_para":"para", "hstyle":"dt", "pstyle":"p"},
 
-    {"Name":'form_fields.html', "Sections":['s-module-django.forms.fields'],
-    "Url":'/ref/forms/fields/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"p"},
+        {"Name": 'form_fields.html', "Sections": ['s-module-django.forms.fields'],
+         "Url":'/ref/forms/fields/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"p"},
 
-    {"Name":'widgets.html', "Sections":['s-built-in-widgets'],
-    "Url":'/ref/forms/widgets/', "code_or_second_para":"para", "hstyle":"h4", "pstyle":"p"},
+        {"Name": 'widgets.html', "Sections": ['s-built-in-widgets'],
+         "Url":'/ref/forms/widgets/', "code_or_second_para":"para", "hstyle":"h4", "pstyle":"p"},
 
-    {"Name":'migration-operations.html', "Sections":['s-schema-operations','s-special-operations'],
-    "Url":'/ref/migration-operations/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"dt"},
+        {"Name": 'migration-operations.html', "Sections": ['s-schema-operations', 's-special-operations'],
+         "Url":'/ref/migration-operations/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"dt"},
 
-    {"Name":'contrib.html', "Sections":['s-contrib-packages'],
-    "Url":'/ref/contrib/', "code_or_second_para":"para", "hstyle":"h2", "pstyle":"p"},
+        {"Name": 'contrib.html', "Sections": ['s-contrib-packages'],
+         "Url":'/ref/contrib/', "code_or_second_para":"para", "hstyle":"h2", "pstyle":"p"},
 
-    {"Name":'django-admin.html', "Sections":['s-available-commands'],
-    "Url":'/ref/django-admin/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"dt"},
+        {"Name": 'django-admin.html', "Sections": ['s-available-commands'],
+         "Url":'/ref/django-admin/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"dt"},
 
-    {"Name":'django-admin.html', "Sections":['s-commands-provided-by-applications'],
-    "Url":'/ref/django-admin/', "code_or_second_para":"para", "hstyle":"h4", "pstyle":"dt"},
+        {"Name": 'django-admin.html', "Sections": ['s-commands-provided-by-applications'],
+         "Url":'/ref/django-admin/', "code_or_second_para":"para", "hstyle":"h4", "pstyle":"dt"},
     ]
 
     for page in page_structure:
         data = DjangoData(page["Name"])
 
-        page_url = '{}{}'.format(DJANGO_DOC_URL,page["Url"])
+        page_url = '{}{}'.format(DJANGO_DOC_URL, page["Url"])
 
         parser = []
         for section_name in page["Sections"]:
-            parser.append(DjangoDataParser(data.get_raw_data(), section_name, page_url))
+            parser.append(DjangoDataParser(
+                data.get_raw_data(), section_name, page_url))
 
             for parsed in parser:
-                parsed.parse_for_data(page["code_or_second_para"], page["hstyle"], page["pstyle"])
+                parsed.parse_for_data(page["code_or_second_para"], page[
+                                      "hstyle"], page["pstyle"])
                 output = DjangoDataOutput(parsed.get_data())
                 output.create_file()
