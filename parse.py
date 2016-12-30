@@ -1,4 +1,5 @@
 import argparse
+import os
 
 from bs4 import BeautifulSoup
 
@@ -198,7 +199,7 @@ class DjangoDataParser(object):
 
 class DjangoDataOutput(object):
     """
-    Object responsible for outputting data into the output.txt file
+    Object responsible for outputting data into the output1.txt file
     """
 
     def __init__(self, data):
@@ -206,10 +207,10 @@ class DjangoDataOutput(object):
 
     def create_file(self):
         """
-        Iterate through the data and create the needed output.txt file.
+        Iterate through the data and create the needed output1.txt file.
 
         """
-        with open('output.txt', 'a+') as output_file:
+        with open('output1.txt', 'a+') as output_file:
             for data_element in self.data:
                 if data_element.get('name'):
                     name = data_element.get('name')
@@ -271,7 +272,7 @@ if __name__ == "__main__":
         {"Name": 'exceptions.html', "Sections": ['s-module-django.core.exceptions', 's-url-resolver-exceptions', 's-http-exceptions', 's-transaction-exceptions'],
          "Url": '/ref/exceptions/', "code_or_second_para": "para", "hstyle": "h3", "pstyle": "dt"},
 
-        {"Name": 'form_fields.html', "Sections": ['s-module-django.forms.fields'],
+        {"Name": 'form_fields.html', "Sections": ['s-core-field-arguments'],
          "Url": '/ref/forms/fields/', "code_or_second_para": "para", "hstyle": "h3", "pstyle": "p"},
 
         {"Name": 'widgets.html', "Sections": ['s-built-in-widgets'],
@@ -282,12 +283,6 @@ if __name__ == "__main__":
 
         {"Name": 'settings.html', "Sections": ['s-core-settings', 's-auth', 's-messages', 's-sessions', 's-sites', 's-static-files'],
             "Url":'/ref/settings/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"p"},
-
-        {"Name": 'utils.html', "Sections": ['s-module-django.utils.cache', 's-module-django.utils.dateparse', 's-module-django.utils.decorators',
-                                            's-module-django.utils.encoding', 's-module-django.utils.feedgenerator', 's-module-django.utils.functional', 's-module-django.utils.html',
-                                            's-module-django.utils.http', 's-module-django.utils.module_loading', 's-module-django.utils.safestring', 's-module-django.utils.text',
-                                            's-module-django.utils.timezone', 's-module-django.utils.translation'],
-            "Url":'/ref/utils/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"p"},
 
         {"Name": 'validators.html', "Sections": ['s-built-in-validators'],
          "Url":'/ref/validators/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"p"},
@@ -324,5 +319,48 @@ if __name__ == "__main__":
                                       "hstyle"], page["pstyle"])
                 output = DjangoDataOutput(parsed.get_data())
                 output.create_file()
+
+
+    Dat = []
+    with open('output1.txt', 'r') as file:
+        for line in file:
+            Dat.append(line)
+
+    with open("output.txt", 'w') as file:
+
+        for i in range(len(Dat)-1):
+            l = Dat[i].split('\t', 1)[0]
+            l2 = Dat[i+1].split('\t', 1)[0]
+            if l == l2:
+                pass
+            else:
+                file.write(Dat[i])
+        file.write(Dat[len(Dat)-1])
+
+    os.remove("output1.txt")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     # open(outfile,'w').writelines(set(open(myfile,'r').readlines()))

@@ -11,7 +11,6 @@ wget --quiet https://docs.djangoproject.com/en/1.10/ref/forms/fields/ -O form_fi
 wget --quiet https://docs.djangoproject.com/en/1.10/ref/forms/widgets/ -O widgets.html
 wget --quiet https://docs.djangoproject.com/en/1.10/ref/templates/builtins/ -O builtins.html
 wget --quiet https://docs.djangoproject.com/en/1.10/ref/settings/ -O settings.html
-wget --quiet https://docs.djangoproject.com/en/1.10/ref/utils/ -O utils.html
 wget --quiet https://docs.djangoproject.com/en/1.10/ref/validators/ -O validators.html
 wget --quiet https://docs.djangoproject.com/en/1.10/ref/views/ -O view.html
 wget --quiet https://docs.djangoproject.com/en/1.10/ref/urlresolvers/ -O urlresolvers.html

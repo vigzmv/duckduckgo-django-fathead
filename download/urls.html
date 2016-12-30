@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL" />
+    <meta http-equiv="imagetoolbar" content="no" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    <meta name="Copyright" content="Django Software Foundation" />
+    <meta name="keywords" content="Python, Django, framework, open-source" />
+    <meta name="description" content="" />
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="/s/img/icon-touch.e4872c4da341.png">
+    <link rel="icon" sizes="192x192" href="/s/img/icon-touch.e4872c4da341.png">
+    <link rel="shortcut icon" href="/s/img/favicon.6dbf28c0650e.ico">
+    <meta name="msapplication-TileColor" content="#113228">
+    <meta name="msapplication-TileImage" content="/s/img/icon-tile.b01ac0ef9f67.png">
+
+    <title>django.conf.urls utility functions | Django documentation | Django</title>
+
+    <link rel="stylesheet" href="/s/css/output.336367358ac1.css" >
+    <script src="/s/js/lib/webfontloader/webfontloader.e75218f5f090.js"></script>
+    <script>
+    WebFont.load({
+      custom: {
+        families: ['FontAwesome', 'Fira+Mono'],
+      },
+      google: {
+        families: ['Roboto:400italic,700italic,300,700,400:latin'
+        ]
+      },
+      classes: false,
+      events: false,
+      timeout: 1000
+    });
+    </script>
+    <script src="/s/js/lib/modernizr.3b36762e418a.js"></script>
+    
+  
+    
+      
+    
+  
+  <link rel="canonical" href="https://docs.djangoproject.com/en/1.10/ref/urls/">
+  
+    
+        
+          
+        
+        
+        <link rel="alternate"
+           hreflang="el"
+           href="https://docs.djangoproject.com/el/1.10/ref/urls/">
+    
+        
+          
+        
+        
+        <link rel="alternate"
+           hreflang="x-default"
+           href="https://docs.djangoproject.com/en/1.10/ref/urls/">
+        
+        <link rel="alternate"
+           hreflang="en"
+           href="https://docs.djangoproject.com/en/1.10/ref/urls/">
+    
+        
+          
+        
+        
+        <link rel="alternate"
+           hreflang="es"
+           href="https://docs.djangoproject.com/es/1.10/ref/urls/">
+    
+        
+          
+        
+        
+        <link rel="alternate"
+           hreflang="fr"
+           href="https://docs.djangoproject.com/fr/1.10/ref/urls/">
+    
+        
+          
+        
+        
+        <link rel="alternate"
+           hreflang="id"
+           href="https://docs.djangoproject.com/id/1.10/ref/urls/">
+    
+        
+          
+        
+        
+        <link rel="alternate"
+           hreflang="ja"
+           href="https://docs.djangoproject.com/ja/1.10/ref/urls/">
+    
+        
+          
+        
+        
+        <link rel="alternate"
+           hreflang="pl"
+           href="https://docs.djangoproject.com/pl/1.10/ref/urls/">
+    
+        
+          
+        
+        
+        <link rel="alternate"
+           hreflang="pt-br"
+           href="https://docs.djangoproject.com/pt-br/1.10/ref/urls/">
+    
+  
+
+  <link rel="search"
+        type="application/opensearchdescription+xml"
+        href="https://docs.djangoproject.com/en/1.10/search/description/"
+        title="Django documentation">
+
+  </head>
+
+  <body id="generic" class="">
+
+    <div role="banner" id="top">
+  <div class="container">
+    <a class="logo" href="https://www.djangoproject.com/">Django</a>
+    <p class="meta">The web framework for perfectionists with deadlines.</p>
+    <div role="navigation">
+      <ul>
+        <li>
+          <a href="https://www.djangoproject.com/start/overview/">Overview</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/download/">Download</a>
+        </li>
+        <li class="active">
+          <a href="https://docs.djangoproject.com/">Documentation</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/weblog/">News</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/community/">Community</a>
+        </li>
+        <li>
+          <a href="https://code.djangoproject.com/">Code</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/foundation/">About</a>
+        </li>
+        <li>
+          <a href="https://www.djangoproject.com/fundraising/">&#9829; Donate</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+    <div class="copy-banner">
+      <div class="container">
+        
+  <h1><a href="https://docs.djangoproject.com/en/1.10/">Documentation</a></h1>
+
+      </div>
+    </div>
+    <div id="billboard"></div>
+
+    <div class="container sidebar-right">
+      <div role="main">
+
+        
+          
+        
+
+        
+<div id="version-switcher">
+  <ul id="doc-languages" class="language-switcher">
+  
+  
+  <li class="other">
+    
+      
+    
+    <a href="https://docs.djangoproject.com/el/1.10/ref/urls/">el</a>
+  </li>
+  
+  
+  
+  
+  
+  <li class="other">
+    
+      
+    
+    <a href="https://docs.djangoproject.com/es/1.10/ref/urls/">es</a>
+  </li>
+  
+  
+  
+  <li class="other">
+    
+      
+    
+    <a href="https://docs.djangoproject.com/fr/1.10/ref/urls/">fr</a>
+  </li>
+  
+  
+  
+  <li class="other">
+    
+      
+    
+    <a href="https://docs.djangoproject.com/id/1.10/ref/urls/">id</a>
+  </li>
+  
+  
+  
+  <li class="other">
+    
+      
+    
+    <a href="https://docs.djangoproject.com/ja/1.10/ref/urls/">ja</a>
+  </li>
+  
+  
+  
+  <li class="other">
+    
+      
+    
+    <a href="https://docs.djangoproject.com/pl/1.10/ref/urls/">pl</a>
+  </li>
+  
+  
+  
+  <li class="other">
+    
+      
+    
+    <a href="https://docs.djangoproject.com/pt-br/1.10/ref/urls/">pt-br</a>
+  </li>
+  
+  
+    <li class="current"
+        title="Click on the links on the left to switch to another language.">
+      <span>Language: <strong>en</strong></span>
+    </li>
+  </ul>
+
+  
+  <ul id="doc-versions" class="version-switcher">
+    
+    
+    <li class="other">
+      
+        
+      
+      <a href="https://docs.djangoproject.com/en/1.7/ref/urls/">1.7</a>
+    </li>
+    
+    
+    
+    <li class="other">
+      
+        
+      
+      <a href="https://docs.djangoproject.com/en/1.8/ref/urls/">1.8</a>
+    </li>
+    
+    
+    
+    <li class="other">
+      
+        
+      
+      <a href="https://docs.djangoproject.com/en/1.9/ref/urls/">1.9</a>
+    </li>
+    
+    
+    
+    
+    
+    <li class="other">
+      
+        
+      
+      <a href="https://docs.djangoproject.com/en/dev/ref/urls/">dev</a>
+    </li>
+    
+    
+    <li class="current"
+        title="This document describes Django 1.10. Click on the links on the left to see other versions.">
+       <span>Documentation version:
+         <strong>1.10</strong>
+       </span>
+    </li>
+  </ul>
+</div>
+
+
+<div id="docs-content">
+<div class="section" id="s-module-django.conf.urls">
+<span id="s-django-conf-urls-utility-functions"></span><span id="module-django.conf.urls"></span><span id="django-conf-urls-utility-functions"></span><h1><code class="docutils literal"><span class="pre">django.conf.urls</span></code> utility functions<a class="headerlink" href="#module-django.conf.urls" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="s-static">
+<span id="static"></span><h2><code class="docutils literal"><span class="pre">static()</span></code><a class="headerlink" href="#static" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="django.conf.urls.static.static">
+<code class="descclassname">static.</code><code class="descname">static</code>(<em>prefix</em>, <em>view=django.views.static.serve</em>, <em>**kwargs</em>)<a class="headerlink" href="#django.conf.urls.static.static" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Helper function to return a URL pattern for serving files in debug mode:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.conf</span> <span class="k">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.conf.urls.static</span> <span class="k">import</span> <span class="n">static</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># ... the rest of your URLconf goes here ...</span>
+<span class="p">]</span> <span class="o">+</span> <span class="n">static</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_URL</span><span class="p">,</span> <span class="n">document_root</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_ROOT</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="s-url">
+<span id="url"></span><h2><code class="docutils literal"><span class="pre">url()</span></code><a class="headerlink" href="#url" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="django.conf.urls.url">
+<code class="descname">url</code>(<em>regex</em>, <em>view</em>, <em>kwargs=None</em>, <em>name=None</em>)<a class="reference internal" href="../../_modules/django/conf/urls/#url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#django.conf.urls.url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p><code class="docutils literal"><span class="pre">urlpatterns</span></code> should be a list of <code class="docutils literal"><span class="pre">url()</span></code> instances. For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="k">import</span> <span class="n">include</span><span class="p">,</span> <span class="n">url</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">url</span><span class="p">(</span><span class="s1">r&#39;^index/$&#39;</span><span class="p">,</span> <span class="n">index_view</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;main-view&#39;</span><span class="p">),</span>
+    <span class="n">url</span><span class="p">(</span><span class="s1">r&#39;^weblog/&#39;</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="s1">&#39;blog.urls&#39;</span><span class="p">)),</span>
+    <span class="o">...</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">regex</span></code> parameter should be a string or
+<a class="reference internal" href="../utils/#django.utils.translation.ugettext_lazy" title="django.utils.translation.ugettext_lazy"><code class="xref py py-func docutils literal"><span class="pre">ugettext_lazy()</span></code></a> (see
+<a class="reference internal" href="../../topics/i18n/translation/#translating-urlpatterns"><span class="std std-ref">Translating URL patterns</span></a>) that contains a regular expression compatible
+with Python&#8217;s <a class="reference external" href="https://docs.python.org/3/library/re.html#module-re" title="(in Python v3.6)"><code class="xref py py-mod docutils literal"><span class="pre">re</span></code></a> module. Strings typically use raw string syntax
+(<code class="docutils literal"><span class="pre">r''</span></code>) so that they can contain sequences like <code class="docutils literal"><span class="pre">\d</span></code> without the need to
+escape the backslash with another backslash.</p>
+<p>The <code class="docutils literal"><span class="pre">view</span></code> parameter is a view function or the result of
+<a class="reference internal" href="../class-based-views/base/#django.views.generic.base.View.as_view" title="django.views.generic.base.View.as_view"><code class="xref py py-meth docutils literal"><span class="pre">as_view()</span></code></a> for class-based views. It can
+also be an <a class="reference internal" href="#django.conf.urls.include" title="django.conf.urls.include"><code class="xref py py-func docutils literal"><span class="pre">include()</span></code></a>.</p>
+<p>The <code class="docutils literal"><span class="pre">kwargs</span></code> parameter allows you to pass additional arguments to the view
+function or method. See <a class="reference internal" href="../../topics/http/urls/#views-extra-options"><span class="std std-ref">Passing extra options to view functions</span></a> for an example.</p>
+<p>See <a class="reference internal" href="../../topics/http/urls/#naming-url-patterns"><span class="std std-ref">Naming URL patterns</span></a> for why the <code class="docutils literal"><span class="pre">name</span></code>
+parameter is useful.</p>
+</div>
+<div class="section" id="s-include">
+<span id="include"></span><h2><code class="docutils literal"><span class="pre">include()</span></code><a class="headerlink" href="#include" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="django.conf.urls.include">
+<code class="descname">include</code>(<em>module</em>, <em>namespace=None</em>, <em>app_name=None</em>)<a class="reference internal" href="../../_modules/django/conf/urls/#include"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#django.conf.urls.include" title="Permalink to this definition">¶</a></dt>
+<dt>
+<code class="descname">include</code>(<em>pattern_list</em>)</dt>
+<dt>
+<code class="descname">include</code>(<em>(pattern_list</em>, <em>app_namespace)</em>, <em>namespace=None</em>)</dt>
+<dt>
+<code class="descname">include</code>(<em>(pattern_list</em>, <em>app_namespace</em>, <em>instance_namespace)</em>)</dt>
+<dd><p>A function that takes a full Python import path to another URLconf module
+that should be &#8220;included&#8221; in this place. Optionally, the <a class="reference internal" href="../../topics/http/urls/#term-application-namespace"><span class="xref std std-term">application
+namespace</span></a> and <a class="reference internal" href="../../topics/http/urls/#term-instance-namespace"><span class="xref std std-term">instance namespace</span></a> where the entries will be included
+into can also be specified.</p>
+<p>Usually, the application namespace should be specified by the included
+module. If an application namespace is set, the <code class="docutils literal"><span class="pre">namespace</span></code> argument
+can be used to set a different instance namespace.</p>
+<p><code class="docutils literal"><span class="pre">include()</span></code> also accepts as an argument either an iterable that returns
+URL patterns, a 2-tuple containing such iterable plus the names of the
+application namespaces, or a 3-tuple containing the iterable and the names
+of both the application and instance namespace.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>module</strong> &#8211; URLconf module (or module name)</li>
+<li><strong>namespace</strong> (<a class="reference external" href="https://docs.python.org/3/library/string.html#module-string" title="(in Python v3.6)"><em>string</em></a>) &#8211; Instance namespace for the URL entries being included</li>
+<li><strong>app_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/string.html#module-string" title="(in Python v3.6)"><em>string</em></a>) &#8211; Application namespace for the URL entries being included</li>
+<li><strong>pattern_list</strong> &#8211; Iterable of <a class="reference internal" href="#django.conf.urls.url" title="django.conf.urls.url"><code class="xref py py-func docutils literal"><span class="pre">django.conf.urls.url()</span></code></a> instances</li>
+<li><strong>app_namespace</strong> (<a class="reference external" href="https://docs.python.org/3/library/string.html#module-string" title="(in Python v3.6)"><em>string</em></a>) &#8211; Application namespace for the URL entries being included</li>
+<li><strong>instance_namespace</strong> (<a class="reference external" href="https://docs.python.org/3/library/string.html#module-string" title="(in Python v3.6)"><em>string</em></a>) &#8211; Instance namespace for the URL entries being included</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>See <a class="reference internal" href="../../topics/http/urls/#including-other-urlconfs"><span class="std std-ref">Including other URLconfs</span></a> and <a class="reference internal" href="../../topics/http/urls/#namespaces-and-include"><span class="std std-ref">URL namespaces and included URLconfs</span></a>.</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 1.9: </span>Support for the <code class="docutils literal"><span class="pre">app_name</span></code> argument is deprecated and will be removed in
+Django 2.0. Specify the <code class="docutils literal"><span class="pre">app_name</span></code> as explained in
+<a class="reference internal" href="../../topics/http/urls/#namespaces-and-include"><span class="std std-ref">URL namespaces and included URLconfs</span></a> instead.</p>
+<p>Support for passing a 3-tuple is also deprecated and will be removed in
+Django 2.0. Pass a 2-tuple containing the pattern list and application
+namespace, and use the <code class="docutils literal"><span class="pre">namespace</span></code> argument instead.</p>
+<p>Lastly, support for an instance namespace without an application namespace
+has been deprecated and will be removed in Django 2.0. Specify the
+application namespace or remove the instance namespace.</p>
+</div>
+</div>
+<div class="section" id="s-handler400">
+<span id="handler400"></span><h2><code class="docutils literal"><span class="pre">handler400</span></code><a class="headerlink" href="#handler400" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="django.conf.urls.handler400">
+<code class="descname">handler400</code><a class="headerlink" href="#django.conf.urls.handler400" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>A callable, or a string representing the full Python import path to the view
+that should be called if the HTTP client has sent a request that caused an error
+condition and a response with a status code of 400.</p>
+<p>By default, this is <code class="docutils literal"><span class="pre">'django.views.defaults.bad_request'</span></code>. If you
+implement a custom view, be sure it returns an
+<a class="reference internal" href="../request-response/#django.http.HttpResponseBadRequest" title="django.http.HttpResponseBadRequest"><code class="xref py py-class docutils literal"><span class="pre">HttpResponseBadRequest</span></code></a>.</p>
+<p>See the documentation about <a class="reference internal" href="../views/#http-bad-request-view"><span class="std std-ref">the 400 (bad request) view</span></a> for more information.</p>
+</div>
+<div class="section" id="s-handler403">
+<span id="handler403"></span><h2><code class="docutils literal"><span class="pre">handler403</span></code><a class="headerlink" href="#handler403" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="django.conf.urls.handler403">
+<code class="descname">handler403</code><a class="headerlink" href="#django.conf.urls.handler403" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>A callable, or a string representing the full Python import path to the view
+that should be called if the user doesn&#8217;t have the permissions required to
+access a resource.</p>
+<p>By default, this is <code class="docutils literal"><span class="pre">'django.views.defaults.permission_denied'</span></code>. If you
+implement a custom view, be sure it returns an
+<a class="reference internal" href="../request-response/#django.http.HttpResponseForbidden" title="django.http.HttpResponseForbidden"><code class="xref py py-class docutils literal"><span class="pre">HttpResponseForbidden</span></code></a>.</p>
+<p>See the documentation about <a class="reference internal" href="../views/#http-forbidden-view"><span class="std std-ref">the 403 (HTTP Forbidden) view</span></a> for more information.</p>
+</div>
+<div class="section" id="s-handler404">
+<span id="handler404"></span><h2><code class="docutils literal"><span class="pre">handler404</span></code><a class="headerlink" href="#handler404" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="django.conf.urls.handler404">
+<code class="descname">handler404</code><a class="headerlink" href="#django.conf.urls.handler404" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>A callable, or a string representing the full Python import path to the view
+that should be called if none of the URL patterns match.</p>
+<p>By default, this is <code class="docutils literal"><span class="pre">'django.views.defaults.page_not_found'</span></code>. If you
+implement a custom view, be sure it returns an
+<a class="reference internal" href="../request-response/#django.http.HttpResponseNotFound" title="django.http.HttpResponseNotFound"><code class="xref py py-class docutils literal"><span class="pre">HttpResponseNotFound</span></code></a>.</p>
+<p>See the documentation about <a class="reference internal" href="../views/#http-not-found-view"><span class="std std-ref">the 404 (HTTP Not Found) view</span></a> for more information.</p>
+</div>
+<div class="section" id="s-handler500">
+<span id="handler500"></span><h2><code class="docutils literal"><span class="pre">handler500</span></code><a class="headerlink" href="#handler500" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="django.conf.urls.handler500">
+<code class="descname">handler500</code><a class="headerlink" href="#django.conf.urls.handler500" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>A callable, or a string representing the full Python import path to the view
+that should be called in case of server errors. Server errors happen when you
+have runtime errors in view code.</p>
+<p>By default, this is <code class="docutils literal"><span class="pre">'django.views.defaults.server_error'</span></code>. If you
+implement a custom view, be sure it returns an
+<a class="reference internal" href="../request-response/#django.http.HttpResponseServerError" title="django.http.HttpResponseServerError"><code class="xref py py-class docutils literal"><span class="pre">HttpResponseServerError</span></code></a>.</p>
+<p>See the documentation about <a class="reference internal" href="../views/#http-internal-server-error-view"><span class="std std-ref">the 500 (HTTP Internal Server Error) view</span></a> for more information.</p>
+</div>
+</div>
+
+</div>
+
+
+
+<div class="browse-horizontal">
+  
+  <div class="left"><a href="../urlresolvers/"><i class="icon icon-chevron-left"></i> <code class="docutils literal"><span class="pre">django.urls</span></code> utility functions</a></div>
+  
+  
+  <div class="right"><a href="../utils/">Django Utils <i class="icon icon-chevron-right"></i></a></div>
+  
+</div>
+
+
+
+        <a href="#top" class="backtotop"><i class="icon icon-chevron-up"></i> Back to Top</a>
+      </div>
+
+      
+<h1 class="visuallyhidden">Additional Information</h1>
+<div role="complementary">
+  
+  
+
+<form action="https://docs.djangoproject.com/en/1.10/search/" class="search form-input" role="search">
+  <label class="visuallyhidden" for="news-search">Search:</label>
+    <input id="id_q" name="q" placeholder="Search 1.10 documentation" type="search" />
+
+    <button type="submit">
+      <i class="icon icon-search"></i>
+      <span class="visuallyhidden">Search</span>
+    </button>
+</form>
+
+  
+
+  
+
+
+  <div class="fundraising-sidebar">
+    <h2>Support Django!</h2>
+
+    <div class="small-heart">
+      <img src="/s/img/small-fundraising-heart.d255f6e934e5.png" alt="Support Django!" />
+    </div>
+
+    <div class="small-cta">
+      <ul class="list-links-small">
+        <li><a href="https://www.djangoproject.com/fundraising/">
+          TicketCamp donated to the Django Software Foundation to
+          support Django development. Donate today!
+        </a></li>
+      </ul>
+    </div>
+  </div>
+
+
+
+  
+    <h2>Contents</h2>
+    
+    <ul>
+<li><a class="reference internal" href="#"><code class="docutils literal"><span class="pre">django.conf.urls</span></code> utility functions</a><ul>
+<li><a class="reference internal" href="#static"><code class="docutils literal"><span class="pre">static()</span></code></a></li>
+<li><a class="reference internal" href="#url"><code class="docutils literal"><span class="pre">url()</span></code></a></li>
+<li><a class="reference internal" href="#include"><code class="docutils literal"><span class="pre">include()</span></code></a></li>
+<li><a class="reference internal" href="#handler400"><code class="docutils literal"><span class="pre">handler400</span></code></a></li>
+<li><a class="reference internal" href="#handler403"><code class="docutils literal"><span class="pre">handler403</span></code></a></li>
+<li><a class="reference internal" href="#handler404"><code class="docutils literal"><span class="pre">handler404</span></code></a></li>
+<li><a class="reference internal" href="#handler500"><code class="docutils literal"><span class="pre">handler500</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+    
+  
+
+  
+  <h2>Browse</h2>
+  <ul>
+    
+    
+    <li>Prev: <a href="../urlresolvers/"><code class="docutils literal"><span class="pre">django.urls</span></code> utility functions</a></li>
+    
+    
+    <li>Next: <a href="../utils/">Django Utils</a></li>
+    
+    <li><a href="https://docs.djangoproject.com/en/1.10/contents/">Table of contents</a></li>
+    
+    <li><a href="https://docs.djangoproject.com/en/1.10/genindex/">General Index</a></li>
+    
+    <li><a href="https://docs.djangoproject.com/en/1.10/py-modindex/">Python Module Index</a></li>
+    
+    
+  </ul>
+  
+
+  
+  <h2>You are here:</h2>
+  <ul>
+    <li>
+      <a href="https://docs.djangoproject.com/en/1.10/">Django 1.10 documentation</a>
+      
+      <ul><li><a href="../">API Reference</a>
+      
+      <ul><li><code class="docutils literal"><span class="pre">django.conf.urls</span></code> utility functions</li></ul>
+      </li></ul>
+    </li>
+  </ul>
+  
+
+  
+  <h2 id="getting-help-sidebar">Getting help</h2>
+  <dl class="list-links">
+    <dt><a href="https://docs.djangoproject.com/en/1.10/faq/">FAQ</a></dt>
+    <dd>Try the FAQ — it's got answers to many common questions.</dd>
+
+    <dt><a href="/en/stable/genindex/">Index</a>, <a href="/en/stable/py-modindex/">Module Index</a>, or <a href="/en/stable/contents/">Table of Contents</a></dt>
+    <dd>Handy when looking for specific information.</dd>
+
+    <dt><a href="http://groups.google.com/group/django-users/">django-users mailing list</a></dt>
+    <dd>Search for information in the archives of the django-users mailing list, or post a question.</dd>
+
+    <dt><a href="irc://irc.freenode.net/django">#django IRC channel</a></dt>
+    <dd>Ask a question in the #django IRC channel, or search the IRC logs to see if it’s been asked before.</dd>
+
+    <dt><a href="http://code.djangoproject.com/">Ticket tracker</a></dt>
+    <dd>Report bugs with Django or Django documentation in our ticket tracker.</dd>
+  </dl>
+  
+
+  
+  <h2>Download:</h2>
+  <p>
+    Offline (Django 1.10):
+    <a href="/m/docs/django-docs-1.10-en.zip">HTML</a> |
+    <a href="https://media.readthedocs.org/pdf/django/1.10.x/django.pdf">PDF</a> |
+    <a href="https://media.readthedocs.org/epub/django/1.10.x/django.epub">ePub</a>
+    <br>
+    <span class="quiet">
+      Provided by <a href="https://readthedocs.org/">Read the Docs</a>.
+    </span>
+  </p>
+  
+</div>
+
+      
+
+    </div>
+
+     
+     
+
+    
+    
+    
+
+    
+      
+<div role="contentinfo">
+  <div class="subfooter">
+    <div class="container">
+      <h1 class="visuallyhidden">Django Links</h1>
+
+      <div class="col learn">
+        <h2>Learn More</h2>
+        <ul>
+          <li><a href="https://www.djangoproject.com/start/overview/">About Django</a></li>
+          
+          <li><a href="https://www.djangoproject.com/start/">Getting Started with Django</a></li>
+          <li><a href="https://docs.djangoproject.com/en/dev/internals/organization/">Team Organization</a></li>
+          <li><a href="https://www.djangoproject.com/foundation/">Django Software Foundation</a></li>
+          <li><a href="https://www.djangoproject.com/conduct/">Code of Conduct</a></li>
+          <li><a href="https://www.djangoproject.com/diversity/">Diversity statement</a></li>
+        </ul>
+      </div>
+
+      <div class="col involved">
+        <h2>Get Involved</h2>
+        <ul>
+          <li><a href="https://www.djangoproject.com/community/">Join a Group</a></li>
+          <li><a href="https://docs.djangoproject.com/en/dev/internals/contributing/">Contribute to Django</a></li>
+          <li><a href="https://docs.djangoproject.com/en/dev/internals/contributing/bugs-and-features/">Submit a Bug</a></li>
+          <li><a href="https://docs.djangoproject.com/en/dev/internals/security/#reporting-security-issues">Report a Security Issue</a></li>
+        </ul>
+      </div>
+
+      <div class="col follow last-child">
+        <h2>Follow Us</h2>
+        <ul>
+          <li><a href="https://github.com/django">GitHub</a></li>
+          <li><a href="https://twitter.com/djangoproject">Twitter</a></li>
+          <li><a href="https://www.djangoproject.com/rss/weblog/">News RSS</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/django-users">Django Users Mailing List</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="container">
+      <div class="footer-logo">
+        <a class="logo" href="https://www.djangoproject.com/">Django</a>
+      </div>
+      <ul class="thanks">
+        <li>
+          <span>Hosting by</span> <a class="rackspace" href="http://rackspace.com">Rackspace</a>
+          <span>Search by</span> <a class="elastic" href="https://www.elastic.co">Elastic Search</a>
+        </li>
+        <li class="design"><span>Design by</span> <a class="threespot" href="http://www.threespot.com">Threespot</a> <span class="ampersand">&amp;</span> <a class="andrevv" href="http://andrevv.com/"></a></li>
+      </ul>
+      <p class="copyright">&copy; 2005-2016
+        <a href="https://www.djangoproject.com/foundation/"> Django Software
+        Foundation</a> and individual contributors. Django is a
+        <a href="https://www.djangoproject.com/trademarks/">registered
+        trademark</a> of the Django Software Foundation.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+    
+
+    
+    <script>
+    function extless(input) {
+        return input.replace(/(.*)\.[^.]+$/, '$1');
+    }
+    var require = {
+        shim: {
+            'jquery': [],
+            'jquery.inview': ["jquery"],
+            'jquery.payment': ["jquery"],
+            'jquery.flot': ["jquery"],
+            'jquery.unveil': ["jquery"],
+            'stripe': {
+              exports: 'Stripe'
+            }
+        },
+        paths: {
+            "jquery": extless("/s/js/lib/jquery/dist/jquery.min.87e69028f78d.js"),
+            "jquery.inview": extless("/s/js/lib/jquery.inview/jquery.inview.min.4edba1c65592.js"),
+            "jquery.payment": extless("/s/js/lib/jquery.payment/lib/jquery.payment.e99c05ca79ae.js"),
+            "jquery.unveil": extless("/s/js/lib/unveil/jquery.unveil.min.ac79eb277093.js"),
+            "jquery.flot": extless("/s/js/lib/jquery-flot/jquery.flot.min.9964206e9d7f.js"),
+            "clipboard": extless("/s/js/lib/clipboard/dist/clipboard.min.bd70fd596a23.js"),
+            "mod/floating-warning": extless("/s/js/mod/floating-warning.a21b2abd2884.js"),
+            "mod/list-collapsing": extless("/s/js/mod/list-collapsing.c1a08d3ef9e9.js"),
+            "mod/list-feature": extless("/s/js/mod/list-feature.73529480f25b.js"),
+            "mod/mobile-menu": extless("/s/js/mod/mobile-menu.841726ee903a.js"),
+            "mod/version-switcher": extless("/s/js/mod/version-switcher.c28bb83972bb.js"),
+            "mod/search-key": extless("/s/js/mod/search-key.f3c0a6fcfedd.js"),
+            "mod/stripe-custom-checkout": extless("/s/js/mod/stripe-custom-checkout.e299868f75aa.js"),
+            "mod/stripe-change-card": extless("/s/js/mod/stripe-change-card.c9e3d05f7a91.js"),
+            "stripe-checkout": "https://checkout.stripe.com/checkout",
+            "stripe": "https://js.stripe.com/v2/?"  // ? needed due to require.js
+        }
+    };
+    </script>
+    <script data-main="/s/js/main.3a2ae4b1529c.js" src="/s/js/lib/require.177879fbe7dd.js"></script>
+    
+
+
+
+  </body>
+</html>
