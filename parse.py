@@ -321,46 +321,19 @@ if __name__ == "__main__":
                 output.create_file()
 
 
+
+    # Removing duplicate entries...
     Dat = []
     with open('output1.txt', 'r') as file:
         for line in file:
             Dat.append(line)
 
     with open("output.txt", 'w') as file:
-
         for i in range(len(Dat)-1):
             l = Dat[i].split('\t', 1)[0]
             l2 = Dat[i+1].split('\t', 1)[0]
-            if l == l2:
-                pass
-            else:
+            if l != l2:
                 file.write(Dat[i])
         file.write(Dat[len(Dat)-1])
 
     os.remove("output1.txt")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # open(outfile,'w').writelines(set(open(myfile,'r').readlines()))
