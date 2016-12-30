@@ -255,10 +255,30 @@ if __name__ == "__main__":
         name: Downloaded file name
         sections: Sections in page
         code_or_second_para: Whether to get code or second_paragraph
+        hstyle: heading attribute for the element
+        pstyle: para attribute for the description
     """
     page_structure = [
+        {"Name": 'contrib.html', "Sections": ['s-contrib-packages'],
+         "Url": '/ref/contrib/', "code_or_second_para": "para", "hstyle": "h2", "pstyle": "p"},
+
+        {"Name": 'django-admin.html', "Sections": ['s-available-commands'],
+         "Url": '/ref/django-admin/', "code_or_second_para": "para", "hstyle": "h3", "pstyle": "dt"},
+
+        {"Name": 'django-admin.html', "Sections": ['s-commands-provided-by-applications'],
+         "Url": '/ref/django-admin/', "code_or_second_para": "para", "hstyle": "h4", "pstyle": "dt"},
+
+        {"Name": 'exceptions.html', "Sections": ['s-module-django.core.exceptions', 's-url-resolver-exceptions', 's-http-exceptions', 's-transaction-exceptions'],
+         "Url": '/ref/exceptions/', "code_or_second_para": "para", "hstyle": "h3", "pstyle": "dt"},
+
+        {"Name": 'form_fields.html', "Sections": ['s-module-django.forms.fields'],
+         "Url": '/ref/forms/fields/', "code_or_second_para": "para", "hstyle": "h3", "pstyle": "p"},
+
+        {"Name": 'widgets.html', "Sections": ['s-built-in-widgets'],
+         "Url": '/ref/forms/widgets/', "code_or_second_para": "para", "hstyle": "h4", "pstyle": "p"},
+
         {"Name": 'builtins.html', "Sections": ['s-built-in-tag-reference', 's-built-in-filter-reference'],
-         "Url":'/ref/templates/builtins/', "code_or_second_para":"code", "hstyle":"h3", "pstyle":"p"},
+         "Url": '/ref/templates/builtins/', "code_or_second_para": "code", "hstyle": "h3", "pstyle": "p"},
 
         {"Name": 'settings.html', "Sections": ['s-core-settings', 's-auth', 's-messages', 's-sessions', 's-sites', 's-static-files'],
             "Url":'/ref/settings/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"p"},
@@ -284,26 +304,9 @@ if __name__ == "__main__":
         {"Name": 'fields.html', "Sections": ['s-module-django.db.models.fields'],
          "Url":'/ref/models/fields/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"p"},
 
-        {"Name": 'api.html', "Sections": ['s-module-django.forms'],
-         "Url":'/ref/forms/api/', "code_or_second_para":"para", "hstyle":"dt", "pstyle":"p"},
-
-        {"Name": 'form_fields.html', "Sections": ['s-module-django.forms.fields'],
-         "Url":'/ref/forms/fields/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"p"},
-
-        {"Name": 'widgets.html', "Sections": ['s-built-in-widgets'],
-         "Url":'/ref/forms/widgets/', "code_or_second_para":"para", "hstyle":"h4", "pstyle":"p"},
-
         {"Name": 'migration-operations.html', "Sections": ['s-schema-operations', 's-special-operations'],
          "Url":'/ref/migration-operations/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"dt"},
 
-        {"Name": 'contrib.html', "Sections": ['s-contrib-packages'],
-         "Url":'/ref/contrib/', "code_or_second_para":"para", "hstyle":"h2", "pstyle":"p"},
-
-        {"Name": 'django-admin.html', "Sections": ['s-available-commands'],
-         "Url":'/ref/django-admin/', "code_or_second_para":"para", "hstyle":"h3", "pstyle":"dt"},
-
-        {"Name": 'django-admin.html', "Sections": ['s-commands-provided-by-applications'],
-         "Url":'/ref/django-admin/', "code_or_second_para":"para", "hstyle":"h4", "pstyle":"dt"},
     ]
 
     for page in page_structure:
@@ -321,3 +324,5 @@ if __name__ == "__main__":
                                       "hstyle"], page["pstyle"])
                 output = DjangoDataOutput(parsed.get_data())
                 output.create_file()
+
+    # open(outfile,'w').writelines(set(open(myfile,'r').readlines()))
